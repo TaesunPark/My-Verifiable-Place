@@ -3,10 +3,12 @@ package com.example.myverifiableplace.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.myverifiableplace.Presenter.MainContract;
 import com.example.myverifiableplace.Presenter.MainPresenter;
 import com.example.myverifiableplace.R;
+import com.example.myverifiableplace.databinding.ActivityMainBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -18,19 +20,22 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private MainPresenter mainPresenter;
     private GoogleMap mMap;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        mainPresenter = new MainPresenter();
-        mainPresenter.attachView(this);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
 
         mapFragment.getMapAsync(this);
+
+        mainPresenter = new MainPresenter();
+        mainPresenter.attachView(this);
 
     }
 
@@ -42,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
+
         mMap = googleMap;
 
         LatLng SEOUL = new LatLng(37.56, 126.97);

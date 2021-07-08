@@ -6,6 +6,10 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
+    viewBinding {
+        enabled = true
+    }
+
     defaultConfig {
         applicationId "com.project.myverifiableplace"
         minSdkVersion 16

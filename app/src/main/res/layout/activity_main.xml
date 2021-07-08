@@ -71,5 +71,4 @@
       android:background="@drawable/ic_baseline_stars_24"
       android:visibility="visible"
       app:backgroundTint="@android:color/holo_orange_light" />
-
 </FrameLayout>
