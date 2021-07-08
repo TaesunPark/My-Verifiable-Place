@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.myverifiableplace.Data.Location;
@@ -43,7 +44,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements MapView{
+public class MainActivity extends AppCompatActivity implements MapView, View.OnClickListener {
 
     private MapPresenter mPresenter;
     private GoogleMap mMap;
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements MapView{
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         mLayout = binding.layoutMain;
         View view = binding.getRoot();
+        binding.starButton.setOnClickListener(this);
         setContentView(view);
 
         locationRequest = LocationRequest.create()
@@ -390,4 +392,18 @@ public class MainActivity extends AppCompatActivity implements MapView{
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
+    @Override
+    public void onClick(View v) {
+
+        if(v.equals(binding.starButton)){
+            // 경도, 위도 보여주고, 현재 위치 정보 수정할 수 있게 하고
+            // 현재 위치를 저장하시겠습니까 ? 문구 띄워주고
+            // 저장하면 room에 저장
+        } else if (v.equals(binding.button2)) {
+
+        } else if (v.equals(binding.button3)){
+
+        }
+
+    }
 }
