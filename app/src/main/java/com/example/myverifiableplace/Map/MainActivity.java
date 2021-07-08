@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +18,8 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -24,6 +27,7 @@ import com.example.myverifiableplace.Data.Location;
 import com.example.myverifiableplace.DatabaseManager;
 import com.example.myverifiableplace.R;
 import com.example.myverifiableplace.databinding.ActivityMainBinding;
+import com.example.myverifiableplace.databinding.DialogStarBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -51,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
     private Location mSelectedLocation = null;
     private LocationManager mLocationManager;
     private ActivityMainBinding binding;
+    private DialogStarBinding dialogBinding;
 
     // 추가
     private Marker currentMarker = null;
@@ -70,15 +75,25 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
     private LocationRequest locationRequest;
     private android.location.Location location;
     private View mLayout;  // Snackbar 사용하기 위해서는 View가 필요합니다.
+    private String markerTitle;
+    Dialog saveDiaLog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+        dialogBinding = DialogStarBinding.inflate(getLayoutInflater());
         mLayout = binding.layoutMain;
         View view = binding.getRoot();
         binding.starButton.setOnClickListener(this);
+        dialogBinding.buttonNoDialog.setOnClickListener(this);
+        dialogBinding.buttonSaveDialog.setOnClickListener(this);
+
         setContentView(view);
+
+        saveDiaLog = new Dialog(this);
+        saveDiaLog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        saveDiaLog.setContentView(dialogBinding.dialogLayout);
 
         locationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
@@ -283,7 +298,7 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
                         = new LatLng(location.getLatitude(), location.getLongitude());
 
 
-                String markerTitle = getCurrentAddress(currentPosition);
+                markerTitle = getCurrentAddress(currentPosition);
                 String markerSnippet = "위도:" + String.valueOf(location.getLatitude())
                         + " 경도:" + String.valueOf(location.getLongitude());
 
@@ -396,12 +411,19 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
     public void onClick(View v) {
 
         if(v.equals(binding.starButton)){
-            // 경도, 위도 보여주고, 현재 위치 정보 수정할 수 있게 하고
-            // 현재 위치를 저장하시겠습니까 ? 문구 띄워주고
-            // 저장하면 room에 저장
+            dialogBinding.textViewLatitudeDialog.setText("위도 : "+currentPosition.latitude);
+            dialogBinding.textViewLongitudeDialog.setText("경도 : "+currentPosition.longitude);
+            dialogBinding.editTextNowLocation.setText(markerTitle);
+            saveDiaLog.show();
+            Window window = saveDiaLog.getWindow();
+            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         } else if (v.equals(binding.button2)) {
 
         } else if (v.equals(binding.button3)){
+
+        } else if (v.equals(dialogBinding.buttonNoDialog)){
+            saveDiaLog.dismiss();
+        } else if (v.equals(dialogBinding.buttonSaveDialog)){
 
         }
 
