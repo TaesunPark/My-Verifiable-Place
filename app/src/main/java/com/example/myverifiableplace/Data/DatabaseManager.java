@@ -1,10 +1,13 @@
-package com.example.myverifiableplace.Model;
+package com.example.myverifiableplace;
 
 import android.app.Application;
 
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+
+import com.example.myverifiableplace.Data.Location;
+import com.example.myverifiableplace.Data.LocationDao;
 
 @Database(entities = {Location.class}, version = 1)
 public abstract class DatabaseManager extends RoomDatabase {

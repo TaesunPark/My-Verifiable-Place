@@ -1,7 +1,6 @@
-package com.example.myverifiableplace.Model;
+package com.example.myverifiableplace.Data;
 
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -11,8 +10,24 @@ public class Location {
     @NonNull
     private String name;
 
+    public void setName(@NonNull String name) {
+        this.name = name;
+    }
+
     @NonNull
     private String address;
+
+    public void setAddress(@NonNull String address) {
+        this.address = address;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
 
     // 위도
     @NonNull

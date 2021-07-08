@@ -1,6 +1,4 @@
-package com.example.myverifiableplace.Model;
-
-import androidx.room.ColumnInfo;
+package com.example.myverifiableplace.Data;
 
 public class LocationDto {
 

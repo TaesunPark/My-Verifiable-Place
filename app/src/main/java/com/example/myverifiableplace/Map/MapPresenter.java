@@ -1,11 +1,9 @@
 package com.example.myverifiableplace.Map;
 
 import android.database.sqlite.SQLiteConstraintException;
+import com.example.myverifiableplace.Data.Location;
+import com.example.myverifiableplace.DatabaseManager;
 
-import com.example.myverifiableplace.Model.DatabaseManager;
-import com.example.myverifiableplace.Model.Location;
-
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -20,9 +18,7 @@ public class MapPresenter {
     public MapPresenter(MapView mapView, DatabaseManager databaseManager){
         this.mapView = mapView;
         this.databaseManager = databaseManager;
-
         disposable = new CompositeDisposable();
-
         mapView.loadMapFragment();
     }
 
@@ -39,5 +35,10 @@ public class MapPresenter {
                     }
                 }));
 
+    }
+
+    public void dispose()
+    {
+        disposable.dispose();
     }
 }
