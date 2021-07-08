@@ -1,9 +1,14 @@
 package com.example.myverifiableplace.Map;
 
+import android.database.sqlite.SQLiteConstraintException;
+
 import com.example.myverifiableplace.Model.DatabaseManager;
 import com.example.myverifiableplace.Model.Location;
 
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class MapPresenter {
 
@@ -22,7 +27,17 @@ public class MapPresenter {
     }
 
     public void saveLocation(Location location){
-//        disposable.add(databaseManager.locationDao().insert)
+        disposable.add(databaseManager.locationDao().insert(location)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> mapView.locationAdded(true, null), throwable ->
+                {
+                    if(throwable instanceof SQLiteConstraintException){
+                        mapView.locationAdded(false, "Location 존재");
+                    }else{
+                        mapView.locationAdded(false, "Location 추가 실패");
+                    }
+                }));
 
     }
 }
