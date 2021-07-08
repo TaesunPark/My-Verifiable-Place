@@ -32,10 +32,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         mapFragment.getMapAsync(this);
 
-
-
-
-
     }
 
     @Override
