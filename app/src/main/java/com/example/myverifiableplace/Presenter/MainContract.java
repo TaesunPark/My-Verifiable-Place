@@ -8,7 +8,7 @@ public interface MainContract {
 
     interface Presenter{
 
-        void loadMap();
+        void loadMapFragment();
 
         void getData();
 

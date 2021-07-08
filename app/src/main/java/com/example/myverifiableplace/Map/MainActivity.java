@@ -1,11 +1,10 @@
-package com.example.myverifiableplace.View;
+package com.example.myverifiableplace.Map;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.myverifiableplace.Presenter.MainContract;
 import com.example.myverifiableplace.Presenter.MainPresenter;
 import com.example.myverifiableplace.R;
 import com.example.myverifiableplace.databinding.ActivityMainBinding;
@@ -16,7 +15,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MainActivity extends AppCompatActivity implements MainContract.View, OnMapReadyCallback {
+public class MainActivity extends AppCompatActivity implements MapView, OnMapReadyCallback {
 
     private MainPresenter mainPresenter;
     private GoogleMap mMap;
@@ -29,13 +28,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         View view = binding.getRoot();
         setContentView(view);
 
+
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
 
         mapFragment.getMapAsync(this);
 
-        mainPresenter = new MainPresenter();
-        mainPresenter.attachView(this);
+
 
     }
 
@@ -66,6 +66,16 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         //mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(SEOUL, 10));
 
+
+    }
+
+    @Override
+    public void loadMapFragment() {
+
+    }
+
+    @Override
+    public void locationAdded(boolean isSucessful, String error) {
 
     }
 }
