@@ -1,5 +1,6 @@
 package com.example.myverifiableplace.Model;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -7,18 +8,36 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "locationTable")
 public class Location {
     @PrimaryKey
-    public int lid;
+    @NonNull
+    private String name;
 
-    // 위치 주소
-    @ColumnInfo(name = "address")
-    public String address;
+    @NonNull
+    private String address;
 
     // 위도
-    @ColumnInfo(name = "latitude")
-    public double latitude;
+    @NonNull
+    private double latitude;
 
     // 경도
-    @ColumnInfo(name = "longitude")
-    public double longitude;
+    @NonNull
+    private double longitude;
+
+    @NonNull
+    public String getName() {
+        return name;
+    }
+
+    @NonNull
+    public String getAddress() {
+        return address;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
 
 }
