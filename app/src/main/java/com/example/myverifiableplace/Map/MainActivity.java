@@ -23,8 +23,8 @@ import android.view.WindowManager;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.example.myverifiableplace.Data.DatabaseManager;
 import com.example.myverifiableplace.Data.Location;
-import com.example.myverifiableplace.DatabaseManager;
 import com.example.myverifiableplace.R;
 import com.example.myverifiableplace.databinding.ActivityMainBinding;
 import com.example.myverifiableplace.databinding.DialogStarBinding;
@@ -62,8 +62,8 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};  // 외부 저장소
     private static final String TAG = "googlemap_example";
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
-    private static final int UPDATE_INTERVAL_MS = 1000;  // 1초
-    private static final int FASTEST_UPDATE_INTERVAL_MS = 500; // 0.5초
+    private static final int UPDATE_INTERVAL_MS = 100000;  // 1초
+    private static final int FASTEST_UPDATE_INTERVAL_MS = 50000; // 0.5초
 
 
     // onRequestPermissionsResult에서 수신된 결과에서 ActivityCompat.requestPermissions를 사용한 퍼미션 요청을 구별하기 위해 사용됩니다.
@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         dialogBinding = DialogStarBinding.inflate(getLayoutInflater());
         mLayout = binding.layoutMain;
@@ -424,7 +425,14 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
         } else if (v.equals(dialogBinding.buttonNoDialog)){
             saveDiaLog.dismiss();
         } else if (v.equals(dialogBinding.buttonSaveDialog)){
+            // 마커 표시
+            // 룸에 저장
 
+            mPresenter.saveLocation(new Location(dialogBinding.edixTextLocationNameDialog.getText().toString(),
+                    dialogBinding.editTextNowLocation.getText().toString(),
+                    currentPosition.latitude, currentPosition.longitude));
+
+            saveDiaLog.dismiss();
         }
 
     }

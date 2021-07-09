@@ -1,4 +1,4 @@
-package com.example.myverifiableplace;
+package com.example.myverifiableplace.Data;
 
 import android.app.Application;
 

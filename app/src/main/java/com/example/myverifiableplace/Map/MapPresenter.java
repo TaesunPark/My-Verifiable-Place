@@ -2,7 +2,7 @@ package com.example.myverifiableplace.Map;
 
 import android.database.sqlite.SQLiteConstraintException;
 import com.example.myverifiableplace.Data.Location;
-import com.example.myverifiableplace.DatabaseManager;
+import com.example.myverifiableplace.Data.DatabaseManager;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;

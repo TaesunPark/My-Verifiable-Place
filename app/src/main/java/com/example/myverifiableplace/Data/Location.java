@@ -6,16 +6,31 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "locationTable")
 public class Location {
+
+
     @PrimaryKey
     @NonNull
     private String name;
+    @NonNull
+    private String address;
+    // 위도
+    @NonNull
+    private double latitude;
+    // 경도
+    @NonNull
+    private double longitude;
+
+    public Location(String name, String address, double latitude, double longitude){
+        this.name = name;
+        this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
 
     public void setName(@NonNull String name) {
         this.name = name;
     }
-
-    @NonNull
-    private String address;
 
     public void setAddress(@NonNull String address) {
         this.address = address;
@@ -29,15 +44,7 @@ public class Location {
         this.longitude = longitude;
     }
 
-    // 위도
-    @NonNull
-    private double latitude;
 
-    // 경도
-    @NonNull
-    private double longitude;
-
-    @NonNull
     public String getName() {
         return name;
     }
