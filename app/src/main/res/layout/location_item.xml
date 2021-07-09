@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp">
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView_name_location_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="성심당"
+        android:textColor="@color/black"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/textView_address_location_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="대전광역시 충무로" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+      <TextView
+          android:id="@+id/textView_latitude_location_item"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="경도 : xxx" />
+
+      <TextView
+          android:id="@+id/textView_longitude_location_item"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="위도 : xxx" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+      <Button
+          android:id="@+id/button_select_location_item"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="선택하기" />
+
+      <Button
+          android:id="@+id/button_delete_location_item"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="삭제하기" />
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+</RelativeLayout>
+

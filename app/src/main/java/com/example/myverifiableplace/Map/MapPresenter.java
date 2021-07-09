@@ -50,6 +50,7 @@ public class MapPresenter {
                 ));
     }
 
+
     public void dispose()
     {
         disposable.dispose();
