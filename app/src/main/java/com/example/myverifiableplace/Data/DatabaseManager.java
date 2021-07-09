@@ -16,15 +16,15 @@ public abstract class DatabaseManager extends RoomDatabase {
     // 싱글톤 구현
     private static DatabaseManager instance = null;
 
-    public static synchronized DatabaseManager getInstance(Application application){
+    public static synchronized DatabaseManager getInstance(Application application) {
 
-        if(instance == null){
-            synchronized (DatabaseManager.class){
+        if (instance == null) {
+            synchronized (DatabaseManager.class) {
                 instance = Room.databaseBuilder(application, DatabaseManager.class, "location_database")
                         .fallbackToDestructiveMigration()
                         .build();
             }
         }
-        return  instance;
+        return instance;
     }
 }

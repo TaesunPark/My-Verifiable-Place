@@ -76,7 +76,10 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
     private android.location.Location location;
     private View mLayout;  // Snackbar 사용하기 위해서는 View가 필요합니다.
     private String markerTitle;
+    private MarkerOptions markerOptions;
     Dialog saveDiaLog;
+    LatLng currentLatLng;
+    String markerSnippet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -214,10 +217,7 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
         //디폴트 위치, Seoul
         LatLng DEFAULT_LOCATION = new LatLng(37.56, 126.97);
         String markerTitle = "위치정보 가져올 수 없음";
-        String markerSnippet = "위치 퍼미션과 GPS 활성 요부 확인하세요";
-
-
-        if (currentMarker != null) currentMarker.remove();
+        markerSnippet = "위치 퍼미션과 GPS 활성 요부 확인하세요";
 
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(DEFAULT_LOCATION);
@@ -225,7 +225,6 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
         markerOptions.snippet(markerSnippet);
         markerOptions.draggable(true);
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-        currentMarker = mMap.addMarker(markerOptions);
 
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, 15);
         mMap.moveCamera(cameraUpdate);
@@ -300,7 +299,7 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
 
 
                 markerTitle = getCurrentAddress(currentPosition);
-                String markerSnippet = "위도:" + String.valueOf(location.getLatitude())
+                markerSnippet = "위도:" + String.valueOf(location.getLatitude())
                         + " 경도:" + String.valueOf(location.getLongitude());
 
                 Log.d(TAG, "onLocationResult : " + markerSnippet);
@@ -322,20 +321,8 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
 
     public void setCurrentLocation(android.location.Location location, String markerTitle, String markerSnippet) {
 
+        currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-        if (currentMarker != null) currentMarker.remove();
-
-
-        LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(currentLatLng);
-        markerOptions.title(markerTitle);
-        markerOptions.snippet(markerSnippet);
-        markerOptions.draggable(true);
-
-
-        currentMarker = mMap.addMarker(markerOptions);
 
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
         mMap.moveCamera(cameraUpdate);
@@ -427,6 +414,12 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
         } else if (v.equals(dialogBinding.buttonSaveDialog)){
             // 마커 표시
             // 룸에 저장
+            markerOptions = new MarkerOptions();
+            markerOptions.position(currentLatLng);
+            markerOptions.title(markerTitle);
+            markerOptions.snippet(markerSnippet);
+            markerOptions.draggable(true);
+            currentMarker = mMap.addMarker(markerOptions);
 
             mPresenter.saveLocation(new Location(dialogBinding.edixTextLocationNameDialog.getText().toString(),
                     dialogBinding.editTextNowLocation.getText().toString(),
