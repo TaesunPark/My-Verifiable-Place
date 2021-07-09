@@ -115,6 +115,8 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
 
         mPresenter = new MapPresenter(this, DatabaseManager.getInstance(getApplication()));
 
+
+
     }
 
     @Override
@@ -207,9 +209,28 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
 
     }
 
-    void getCurrentLocation(){
+    @Override
+    public void updateLocation(List<Location> locations) {
+        Log.d("hello", String.valueOf(locations.size()));
+
+        LatLng currentLatLng;
+
+        for(int i=0; i<locations.size();i++){
+
+            markerOptions = new MarkerOptions();
+            currentLatLng = new LatLng(locations.get(i).getLatitude(), locations.get(i).getLongitude());
+            markerOptions.position(currentLatLng);
+            markerOptions.title(locations.get(i).getAddress()+"//"+locations.get(i).getName());
+            markerOptions.snippet("위도:" + String.valueOf(locations.get(i).getLongitude())
+                    + " 경도:" + String.valueOf(locations.get(i).getLatitude()));
+            markerOptions.draggable(true);
+            currentMarker = mMap.addMarker(markerOptions);
+
+        }
+
 
     }
+
 
     public void setDefaultLocation() {
 
@@ -414,6 +435,8 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
         } else if (v.equals(dialogBinding.buttonSaveDialog)){
             // 마커 표시
             // 룸에 저장
+            markerTitle +=  "//"+dialogBinding.edixTextLocationNameDialog.getText();
+
             markerOptions = new MarkerOptions();
             markerOptions.position(currentLatLng);
             markerOptions.title(markerTitle);

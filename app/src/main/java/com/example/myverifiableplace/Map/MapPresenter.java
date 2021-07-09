@@ -1,6 +1,8 @@
 package com.example.myverifiableplace.Map;
 
 import android.database.sqlite.SQLiteConstraintException;
+import android.util.Log;
+
 import com.example.myverifiableplace.Data.Location;
 import com.example.myverifiableplace.Data.DatabaseManager;
 
@@ -20,6 +22,7 @@ public class MapPresenter {
         this.databaseManager = databaseManager;
         disposable = new CompositeDisposable();
         mapView.loadMapFragment();
+        setLocation();
     }
 
     public void saveLocation(Location location){
@@ -35,6 +38,16 @@ public class MapPresenter {
                     }
                 }));
 
+    }
+
+    public void setLocation(){
+
+        disposable.add(databaseManager.locationDao().getLocations()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(locations ->
+                        mapView.updateLocation(locations)
+                ));
     }
 
     public void dispose()
