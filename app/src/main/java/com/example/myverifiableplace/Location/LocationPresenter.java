@@ -18,8 +18,8 @@ public class LocationPresenter {
     public LocationPresenter(LocationView locationView, DatabaseManager databaseManager){
         this.locationView = locationView;
         this.databaseManager = databaseManager;
-
         disposable = new CompositeDisposable();
+        getLocations();
     }
 
     private void getLocations()

@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.myverifiableplace.Data.DatabaseManager;
 import com.example.myverifiableplace.Data.Location;
+import com.example.myverifiableplace.Location.LocationActivity;
 import com.example.myverifiableplace.R;
 import com.example.myverifiableplace.databinding.ActivityMainBinding;
 import com.example.myverifiableplace.databinding.DialogStarBinding;
@@ -86,6 +87,8 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding.button2.setOnClickListener(this);
+        binding.button3.setOnClickListener(this);
         dialogBinding = DialogStarBinding.inflate(getLayoutInflater());
         mLayout = binding.layoutMain;
         View view = binding.getRoot();
@@ -427,7 +430,8 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
             Window window = saveDiaLog.getWindow();
             window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         } else if (v.equals(binding.button2)) {
-
+            Intent intent = new Intent(getApplicationContext(), LocationActivity.class);
+            startActivity(intent);
         } else if (v.equals(binding.button3)){
 
         } else if (v.equals(dialogBinding.buttonNoDialog)){
