@@ -36,7 +36,6 @@ public class LocationPresenter {
                 .subscribeOn(Schedulers.io())
                 .subscribe());
 
-
     }
 
     public void dispose()

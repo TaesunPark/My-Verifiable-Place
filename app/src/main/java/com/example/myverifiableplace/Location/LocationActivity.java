@@ -54,11 +54,16 @@ public class LocationActivity extends AppCompatActivity  implements LocationView
     @Override
     public void onDeleted(Location location) {
         new AlertDialog.Builder(LocationActivity.this)
-                .setTitle("Delete location")
-                .setMessage("Are you sure you want to delete " + location.getName() + "?")
+                .setTitle("삭제 메시지")
+                .setMessage("장소를 삭제하시겠습니까 " + location.getName() + "?")
                 .setPositiveButton("YES", (dialog, which) -> mPresenter.deleteLocation(location))
                 .setNegativeButton("NO", null)
                 .show();
+    }
+
+    @Override
+    public void onUpdated(Location location) {
+
     }
 
     @Override

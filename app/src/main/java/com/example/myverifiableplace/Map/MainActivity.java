@@ -138,11 +138,9 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
         mapFragment.getMapAsync(googleMap -> {
             mMap = googleMap;
 
-            //런타임 퍼미션 요청 대화상자나 GPS 활성 요청 대화상자 보이기전에
-            //지도의 초기위치를 서울로 이동
             setDefaultLocation();
 
-//런타임 퍼미션 처리
+            //런타임 퍼미션 처리
             // 1. 위치 퍼미션을 가지고 있는지 체크합니다.
             int hasFineLocationPermission = ContextCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_FINE_LOCATION);
@@ -157,10 +155,7 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
                 // 2. 이미 퍼미션을 가지고 있다면
                 // ( 안드로이드 6.0 이하 버전은 런타임 퍼미션이 필요없기 때문에 이미 허용된 걸로 인식합니다.)
 
-
                 startLocationUpdates(); // 3. 위치 업데이트 시작
-
-
             }else {  //2. 퍼미션 요청을 허용한 적이 없다면 퍼미션 요청이 필요합니다. 2가지 경우(3-1, 4-1)가 있습니다.
 
                 // 3-1. 사용자가 퍼미션 거부를 한 적이 있는 경우에는
@@ -189,21 +184,7 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
 
             }
 
-
-
             mMap.getUiSettings().setMyLocationButtonEnabled(true);
-            // 현재 오동작을 해서 주석처리
-
-            //mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-
-                @Override
-                public void onMapClick(LatLng latLng) {
-
-                    Log.d( TAG, "onMapClick :");
-                }
-            });
-
         });
     }
 
@@ -214,7 +195,6 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
 
     @Override
     public void updateLocation(List<Location> locations) {
-        Log.d("hello", String.valueOf(locations.size()));
 
         LatLng currentLatLng;
 
@@ -332,8 +312,7 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
                 binding.textView2.setText("경도 :"+location.getLongitude());
                 binding.textView3.setText("위도 :"+location.getLatitude());
 
-                //현재 위치에 마커 생성하고 이동
-                setCurrentLocation(location, markerTitle, markerSnippet);
+                setCurrentLocation(location);
 
                 mCurrentLocatiion = location;
             }
@@ -343,10 +322,9 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
 
     };
 
-    public void setCurrentLocation(android.location.Location location, String markerTitle, String markerSnippet) {
+    public void setCurrentLocation(android.location.Location location) {
 
         currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-
 
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
         mMap.moveCamera(cameraUpdate);
@@ -419,6 +397,13 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
+    public void shareLocation(){
+        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+        sharingIntent.setType("text/html");
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, "위도 : "+currentPosition.latitude+"\n"+"경도 : "+currentPosition.longitude+"\n"+"주소 : " + markerTitle);
+        startActivity(Intent.createChooser(sharingIntent,"Share using text"));
+    }
+
     @Override
     public void onClick(View v) {
 
@@ -433,23 +418,25 @@ public class MainActivity extends AppCompatActivity implements MapView, View.OnC
             Intent intent = new Intent(getApplicationContext(), LocationActivity.class);
             startActivity(intent);
         } else if (v.equals(binding.button3)){
-
+            shareLocation();
         } else if (v.equals(dialogBinding.buttonNoDialog)){
             saveDiaLog.dismiss();
         } else if (v.equals(dialogBinding.buttonSaveDialog)){
             // 마커 표시
             // 룸에 저장
-            markerTitle +=  "//"+dialogBinding.edixTextLocationNameDialog.getText();
+            markerTitle =  "대전광역시 대덕구 송촌동 472-6"+"//"+"송촌 주먹구이";
 
             markerOptions = new MarkerOptions();
-            markerOptions.position(currentLatLng);
+            markerOptions.position(new LatLng(36.3632169,127.4387083));
             markerOptions.title(markerTitle);
-            markerOptions.snippet(markerSnippet);
+            markerOptions.snippet("위도:" + String.valueOf(36.3632169) + "\n" +
+                                            "경도:" + String.valueOf(127.4387083));
             markerOptions.draggable(true);
             currentMarker = mMap.addMarker(markerOptions);
 
             mPresenter.saveLocation(new Location(dialogBinding.edixTextLocationNameDialog.getText().toString(),
                     dialogBinding.editTextNowLocation.getText().toString(),
+                    dialogBinding.editTextLocationMemoDialog.getText().toString(),
                     currentPosition.latitude, currentPosition.longitude));
 
             saveDiaLog.dismiss();

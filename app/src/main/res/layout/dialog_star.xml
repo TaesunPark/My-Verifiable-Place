@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="장소 이름  :" />
+            android:text="장소 이름 :" />
 
         <EditText
             android:id="@+id/edixText_location_name_dialog"
@@ -32,6 +32,29 @@
             android:layout_weight="1"
             android:ems="18"
             android:hint="기록할 장소 명을 입력하세요."
+            android:inputType="textPersonName"
+            android:textSize="15dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="세부 기록 :" />
+
+        <EditText
+            android:id="@+id/editText_location_memo_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="18"
+            android:hint="기록할 내용을 적어주세요."
             android:inputType="textPersonName"
             android:textSize="15dp" />
     </LinearLayout>

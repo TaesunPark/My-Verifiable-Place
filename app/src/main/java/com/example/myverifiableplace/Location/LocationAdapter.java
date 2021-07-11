@@ -45,9 +45,9 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
         final Location location = data.get(position);
         holder.name.setText(location.getName());
         holder.address.setText(location.getAddress());
-        holder.latitude.setText(String.valueOf(location.getLatitude()));
-        holder.longitude.setText(String.valueOf(location.getLongitude()));
-
+        holder.latitude.setText(String.valueOf("위도 :" +location.getLatitude()));
+        holder.longitude.setText(String.valueOf("경도 :"+location.getLongitude()));
+        holder.memo.setText(location.getMemo());
         holder.deleteButton.setOnClickListener(v -> listener.onDeleted(location));
         holder.selectButton.setOnClickListener(v -> listener.onSelected(location));
     }
@@ -63,6 +63,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
         TextView address;
         TextView latitude;
         TextView longitude;
+        TextView memo;
         Button selectButton;
         Button deleteButton;
 
@@ -74,6 +75,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
             longitude = view.findViewById(R.id.textView_longitude_location_item);
             selectButton = view.findViewById(R.id.button_select_location_item);
             deleteButton = view.findViewById(R.id.button_delete_location_item);
+            memo = view.findViewById(R.id.textView_memo_location_item);
         }
     }
 
@@ -82,6 +84,9 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
         void onSelected(Location location);
 
         void onDeleted(Location location);
+
+        void onUpdated(Location location);
+
     }
 
 }

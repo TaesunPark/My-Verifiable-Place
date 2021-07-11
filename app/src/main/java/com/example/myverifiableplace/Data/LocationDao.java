@@ -23,4 +23,5 @@ public interface LocationDao {
     @Query("SELECT * FROM locationTable")
     Flowable<List<Location>> getLocations();
 
+
 }

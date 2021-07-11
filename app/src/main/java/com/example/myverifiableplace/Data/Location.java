@@ -20,11 +20,16 @@ public class Location {
     @NonNull
     private double longitude;
 
-    public Location(String name, String address, double latitude, double longitude){
+    @NonNull
+    private String memo;
+
+
+    public Location(String name, String address,String memo, double latitude, double longitude){
         this.name = name;
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.memo = memo;
     }
 
 
@@ -44,12 +49,18 @@ public class Location {
         this.longitude = longitude;
     }
 
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
+
+    public String getMemo() {
+        return memo;
+    }
 
     public String getName() {
         return name;
     }
 
-    @NonNull
     public String getAddress() {
         return address;
     }
